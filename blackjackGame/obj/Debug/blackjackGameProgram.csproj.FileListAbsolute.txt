@@ -1,0 +1,10 @@
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\blackjackGame.exe.config
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\blackjackGame.exe
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\blackjackGame.pdb
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGameProgram.csproj.AssemblyReference.cache
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGameProgram.csproj.SuggestedBindingRedirects.cache
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.Properties.Resources.resources
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGameProgram.csproj.GenerateResource.cache
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGameProgram.csproj.CoreCompileInputs.cache
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.exe
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.pdb
