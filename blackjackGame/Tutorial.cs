@@ -28,7 +28,7 @@ namespace blackjackGame
             fTutorial.BackColor = Color.Black;
             //Configura algumas propriedades do texto tutorial
             fTutorial.textTutorial.Width = (fTutorial.Width / 2) - 10;
-            fTutorial.textTutorial.BorderThickness = 5;
+            fTutorial.textTutorial.BorderThickness = 0;
             fTutorial.textTutorial.ReadOnly = true;
         }
         //configura o botão voltar para a tela Principal
