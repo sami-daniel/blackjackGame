@@ -16,5 +16,12 @@ namespace blackjackGame
         {
             InitializeComponent();
         }
+
+        private void btnTutorial_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            
+            Tutorial.CallTutorial();
+        }
     }
 }

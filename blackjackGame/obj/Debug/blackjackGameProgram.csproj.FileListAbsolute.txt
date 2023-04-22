@@ -8,3 +8,7 @@ C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGameProgra
 C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGameProgram.csproj.CoreCompileInputs.cache
 C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.exe
 C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.pdb
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Guna.UI2.dll
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.Menu.resources
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.Tutorial.resources
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGameProgram.csproj.CopyComplete
