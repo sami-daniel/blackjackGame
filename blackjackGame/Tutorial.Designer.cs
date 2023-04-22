@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.btnVoltar = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.NavegadorWeb = new System.Windows.Forms.WebBrowser();
             this.SuspendLayout();
             // 
             // btnVoltar
@@ -44,23 +43,12 @@
             this.btnVoltar.Text = "↺";
             this.btnVoltar.Click += new System.EventHandler(this.btnVoltar_Click);
             // 
-            // NavegadorWeb
-            // 
-            this.NavegadorWeb.AllowNavigation = false;
-            this.NavegadorWeb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NavegadorWeb.Location = new System.Drawing.Point(0, 0);
-            this.NavegadorWeb.MinimumSize = new System.Drawing.Size(20, 20);
-            this.NavegadorWeb.Name = "NavegadorWeb";
-            this.NavegadorWeb.Size = new System.Drawing.Size(1202, 625);
-            this.NavegadorWeb.TabIndex = 4;
-            // 
             // Tutorial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1202, 625);
-            this.Controls.Add(this.NavegadorWeb);
             this.Controls.Add(this.btnVoltar);
             this.Name = "Tutorial";
             this.ShowIcon = false;
@@ -74,6 +62,5 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2HtmlLabel btnVoltar;
-        private System.Windows.Forms.WebBrowser NavegadorWeb;
     }
 }
