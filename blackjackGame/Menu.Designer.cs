@@ -92,6 +92,7 @@
             this.Name = "Menu";
             this.ShowIcon = false;
             this.Text = "Blackjack";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Menu_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

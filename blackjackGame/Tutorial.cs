@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -23,13 +24,10 @@ namespace blackjackGame
             Tutorial fTutorial = new Tutorial();
             fTutorial.Show();
             fTutorial.FormBorderStyle = FormBorderStyle.None;
+            fTutorial.BackColor = Color.Black;
             fTutorial.WindowState = FormWindowState.Maximized;
             fTutorial.MinimizeBox = false;
-            fTutorial.BackColor = Color.Black;
-            //Configura algumas propriedades do texto tutorial
-            fTutorial.textTutorial.Width = (fTutorial.Width / 2) - 10;
-            fTutorial.textTutorial.BorderThickness = 0;
-            fTutorial.textTutorial.ReadOnly = true;
+            fTutorial.NavegadorWeb.Navigate("https://www.ludijogos.com/multiplayer/blackjack/regras/");
         }
         //configura o botão voltar para a tela Principal
         private void btnVoltar_Click(object sender, EventArgs e)
@@ -37,6 +35,11 @@ namespace blackjackGame
             Menu newMenu = new Menu();
             this.Close();
             newMenu.Show();
+        }
+
+        private void Tutorial_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
