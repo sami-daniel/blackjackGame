@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.btnTutorial = new Guna.UI2.WinForms.Guna2Button();
             this.btnIniciar = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
             // 
@@ -44,23 +43,6 @@
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Blackjack";
             // 
-            // btnTutorial
-            // 
-            this.btnTutorial.BorderRadius = 8;
-            this.btnTutorial.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnTutorial.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnTutorial.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnTutorial.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnTutorial.FillColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnTutorial.Font = new System.Drawing.Font("Sylfaen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTutorial.ForeColor = System.Drawing.Color.Black;
-            this.btnTutorial.Location = new System.Drawing.Point(52, 296);
-            this.btnTutorial.Name = "btnTutorial";
-            this.btnTutorial.Size = new System.Drawing.Size(138, 45);
-            this.btnTutorial.TabIndex = 1;
-            this.btnTutorial.Text = "Tutorial";
-            this.btnTutorial.Click += new System.EventHandler(this.btnTutorial_Click);
-            // 
             // btnIniciar
             // 
             this.btnIniciar.BorderRadius = 8;
@@ -71,7 +53,7 @@
             this.btnIniciar.FillColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnIniciar.Font = new System.Drawing.Font("Sylfaen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnIniciar.ForeColor = System.Drawing.Color.Black;
-            this.btnIniciar.Location = new System.Drawing.Point(196, 296);
+            this.btnIniciar.Location = new System.Drawing.Point(112, 296);
             this.btnIniciar.Name = "btnIniciar";
             this.btnIniciar.Size = new System.Drawing.Size(138, 45);
             this.btnIniciar.TabIndex = 2;
@@ -84,7 +66,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(14)))));
             this.ClientSize = new System.Drawing.Size(384, 461);
             this.Controls.Add(this.btnIniciar);
-            this.Controls.Add(this.btnTutorial);
             this.Controls.Add(this.lblTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -101,7 +82,6 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2HtmlLabel lblTitle;
-        private Guna.UI2.WinForms.Guna2Button btnTutorial;
         private Guna.UI2.WinForms.Guna2Button btnIniciar;
     }
 }
