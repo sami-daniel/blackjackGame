@@ -17,12 +17,6 @@ namespace blackjackGame
             InitializeComponent();
         }
 
-        private void btnTutorial_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            Tutorial.CallTutorial();
-        }
-
         private void Menu_FormClosed(object sender, FormClosedEventArgs e)
         {
             System.Environment.Exit(0);

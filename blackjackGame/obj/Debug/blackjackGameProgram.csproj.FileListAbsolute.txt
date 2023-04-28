@@ -10,5 +10,14 @@ C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.exe
 C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.pdb
 C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Guna.UI2.dll
 C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.Menu.resources
-C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.Tutorial.resources
 C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGameProgram.csproj.CopyComplete
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\runtimes\win-x86\native\WebView2Loader.dll
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\runtimes\win-x64\native\WebView2Loader.dll
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\runtimes\win-arm64\native\WebView2Loader.dll
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Microsoft.Web.WebView2.Core.dll
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Microsoft.Web.WebView2.WinForms.dll
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Microsoft.Web.WebView2.Wpf.dll
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Microsoft.Web.WebView2.Core.xml
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Microsoft.Web.WebView2.WinForms.xml
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Microsoft.Web.WebView2.Wpf.xml
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.MainProgram.resources
