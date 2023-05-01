@@ -15,12 +15,15 @@ namespace blackjackGame
 {
     public partial class MainProgram : Form
     {
+        private List<string> cartasNaBancada = new List<string>();
+        private int pontosDaCasa;
+        private int PontosDoJogador;
+        bool TemAs;
         public MainProgram()
         {
             InitializeComponent();
             StartGame();
         }
-
         private void MainProgram_Load(object sender, EventArgs e)
         {
             this.Width = 1600;
@@ -32,31 +35,77 @@ namespace blackjackGame
             this.bancadaDealer.Top = 25;
             //Configuraçoes da tela do jogo, somente estetico
         }
-
-
-
-        public void StartGame()
+        
+        private void StartGame()
         {
-           for (int i = 0; i < 7 ; i++)
+            AdicionarCarta(true, 1, Baralho());
+            for (int i = 0; i < 4; i++)
             {
-                AdicionarCarta("a",Baralho());
+                AdicionarCarta(false, 1, Baralho());
             }
-           //teste
         }
-        private void AdicionarCarta(string index,  Dictionary<int, string> baralho)
+        private void AdicionarCarta(bool IsFirstCard,int index,  Dictionary<int, string> Baralho)
         {
             Random cartaAleatoria = new Random();
-           
             //Parte da seleção aleatoria da carta do baralho
-            int selecionaCarta = cartaAleatoria.Next(1, 13);
-            AdicionarCartaImagem(baralho[selecionaCarta],"newCard");
+            int selecionarCarta = cartaAleatoria.Next(1, 13);
+            if(selecionarCarta == 1)
+            {
+                TemAs = true;
+            }
+            
+            AdicionarCartaImagem(IsFirstCard,Baralho[selecionarCarta],"newCard",Baralho,selecionarCarta);
+            if (index == 1)
+            {
+                if (selecionarCarta == 11)
+                {
+                    pontosDaCasa += 10;
+                }
+                else if (selecionarCarta == 12)
+                {
+                    pontosDaCasa += 10;
+                }
+                else if(selecionarCarta == 13)
+                {
+                    pontosDaCasa += 10;
+                }
+                else if (selecionarCarta == 1)
+                {
+                    pontosDaCasa += 11;
+                }
+                else
+                {
+                    pontosDaCasa += selecionarCarta;
+                }
+                if(pontosDaCasa > 21 && TemAs == true)
+                {
+                    pontosDaCasa -= 11;
+                    pontosDaCasa += 1;
+                }
+                if(pontosDaCasa > 21 && TemAs == false)
+                {
+                    FimDoJogo();
+                }
+                guna2HtmlLabel1.Text = pontosDaCasa.ToString();
+            }
         }
+
         //Metodo pra criar a imagem da carta e adicionar na mesa
-        private void AdicionarCartaImagem(string imageLocation, string nomeCarta)
+        private void AdicionarCartaImagem(bool isFirstCard, string imageLocation, string nomeCarta, Dictionary<int, string> Baralho,int rnd)
         {
             Guna2PictureBox novaCarta = new Guna2PictureBox();
             int i = 0;
-            novaCarta.ImageLocation = imageLocation;
+            if (isFirstCard)
+            {
+                novaCarta.ImageLocation = @"C:\Users\Sami\Projetos\blackjackGame\blackjackGame\Assets\Baralho\partedetrasdacarta.png";
+                novaCarta.Name = "cartaVirada";
+                cartasNaBancada.Add(imageLocation);
+            }
+            else
+            {
+               novaCarta.ImageLocation= imageLocation;
+                cartasNaBancada.Add(imageLocation);
+            }
             novaCarta.Width = 200;
             novaCarta.Height = 300;
             foreach (Control elemento in bancadaDealer.Controls)
@@ -67,15 +116,20 @@ namespace blackjackGame
             novaCarta.Name = nomeCarta;
             novaCarta.FillColor = Color.Transparent;
             novaCarta.SizeMode = PictureBoxSizeMode.Zoom;
-            //gira a imagem
-            novaCarta.Image.RotateFlip(RotateFlipType.Rotate180FlipX);
             bancadaDealer.Controls.Add(novaCarta);
         }
-        
-        public Dictionary<int, string> Baralho()
+        private void FimDoJogo()
+        {
+            foreach(Control elemento in bancadaDealer.Controls)
+            {
+                bancadaDealer.Controls.Remove(elemento);
+                elemento.Dispose();
+            }
+        }
+        private Dictionary<int, string> Baralho()
         {
             Dictionary<int,string> baralho = new Dictionary<int,string>();
-            for(int i = 1; i<13;i++)
+            for(int i = 1; i<=13;i++)
             {
                 if (i == 11)
                 {
