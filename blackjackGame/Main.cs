@@ -65,12 +65,12 @@ namespace blackjackGame
 
         public void StartGame()
         {
-            NovaCarta(mesaCasa,Baralho(),rnd.Next(1,13),0, mesaCasa);
-            NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0,mesaCasa);
+            NovaCarta(mesaCasa,Baralho(),rnd.Next(1,13),0, mesaCasa,btnEncerrar,btnPedirCarta,lblWinner,lblPontosdaCasa,lblPontosdoJogador);
+            NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
             Thread.Sleep(1000);
             btnPedirCarta.Visible = true;
         }
-        public static PictureBox NovaCarta(Guna2Panel mesa, Dictionary<int,string> Baralho1, int NewCardAleatorio, int index, Guna2Panel mesaD)
+        public static PictureBox NovaCarta(Guna2Panel mesa, Dictionary<int,string> Baralho1, int NewCardAleatorio, int index, Guna2Panel mesaD, Guna2Button btnEncerrar, Guna2Button btnPedir,Guna2HtmlLabel lblWinner,Guna2HtmlLabel lblPontosdaCasa,Guna2HtmlLabel lblPontosDoJogador)
         {
             Debug.Assert(!(index != 0) || !(index != 1), "Index invalído");
             PictureBox novaCarta = new PictureBox();
@@ -170,9 +170,8 @@ namespace blackjackGame
             mesa.Controls.Add(novaCarta);
             if(pontosCasa >= 21 || pontosJogador >= 21)
             {
-                FimDeJogo(mesaD,form.lblPontosdoJogador);
-                form.btnPedirCarta.Hide();
-                form.btnEncerrar.Hide();    
+                FimDeJogo(mesaD,lblPontosdaCasa,lblPontosDoJogador,lblWinner,btnPedir,btnEncerrar);
+                  
             }
             return novaCarta;
         }
@@ -212,24 +211,24 @@ namespace blackjackGame
             mesaJogador.Visible = true;
             btnPedirCarta.Visible = true;
         }
-        public static void FimDeJogo(Guna2Panel mesaD,Guna2HtmlLabel lbl)
+        public static void FimDeJogo(Guna2Panel mesaD,Guna2HtmlLabel lblpontosdacasa,Guna2HtmlLabel lblpontosdojogador,Guna2HtmlLabel lblWinner, Guna2Button btnPedir, Guna2Button btnEncerrar)
         {
             Main form = new Main();
             
             if (pontosCasa > 21)
             {
-                form.lblPontosdoJogador.Text = $"Pontos do jogador: {form.lblPontosdoJogador}";
-                form.lblPontosdaCasa.Text = $"Pontos da casa: {form.lblPontosdaCasa}";
-                form.lblWinner.Text = "Jogador venceu";
-                form.btnEncerrar.Hide();
-                form.btnStartGame.Hide();
-                form.lblPontosdoJogador.Show();
-                form.lblPontosdaCasa.Show();
-                form.lblWinner.Show();
+                lblpontosdacasa.Text = $"Pontos da casa: {lblpontosdacasa}";
+                lblpontosdacasa.Visible = true;
+                lblpontosdojogador.Text = $"Pontos do jogador: {lblpontosdojogador}";
+                lblpontosdojogador.Visible = true;
+                lblWinner.Text = "Jogador venceu";
+                lblWinner.Visible = true;
+                btnEncerrar .Visible = false;
+                btnPedir.Visible = false;
+                //paro aki
             }
             else if(pontosJogador > 21)
             {
-                lbl.Show();
                 form.lblPontosdoJogador.Text = $"Pontos do jogador: {form.lblPontosdoJogador}";
                 form.lblPontosdaCasa.Text = $"Pontos da casa: {form.lblPontosdaCasa}";
                 form.lblWinner.Text = "Casa venceu";
@@ -288,7 +287,7 @@ namespace blackjackGame
         }
         private void btnPedirCarta_Click(object sender, EventArgs e)
         {
-            NovaCarta(mesaJogador,Baralho(),rnd.Next(1,13),1, mesaCasa);
+            NovaCarta(mesaJogador,Baralho(),rnd.Next(1,13),1, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
             if(mesaJogador.Controls.Count == 7)
             {
                 btnPedirCarta.Visible = false;
@@ -306,7 +305,7 @@ namespace blackjackGame
         {
             while(mesaCasa.Controls.Count != 7 || pontosCasa <= 19)
             {
-                NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa);
+                NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
             }
         }
     }
