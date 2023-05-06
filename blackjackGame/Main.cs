@@ -213,13 +213,11 @@ namespace blackjackGame
         }
         public static void FimDeJogo(Guna2Panel mesaD,Guna2HtmlLabel lblpontosdacasa,Guna2HtmlLabel lblpontosdojogador,Guna2HtmlLabel lblWinner, Guna2Button btnPedir, Guna2Button btnEncerrar)
         {
-            Main form = new Main();
-            
             if (pontosCasa > 21)
             {
-                lblpontosdacasa.Text = $"Pontos da casa: {lblpontosdacasa}";
+                lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
                 lblpontosdacasa.Visible = true;
-                lblpontosdojogador.Text = $"Pontos do jogador: {lblpontosdojogador}";
+                lblpontosdojogador.Text = $"Pontos do jogador: {pontosJogador}";
                 lblpontosdojogador.Visible = true;
                 lblWinner.Text = "Jogador venceu";
                 lblWinner.Visible = true;
@@ -229,61 +227,65 @@ namespace blackjackGame
             }
             else if(pontosJogador > 21)
             {
-                form.lblPontosdoJogador.Text = $"Pontos do jogador: {form.lblPontosdoJogador}";
-                form.lblPontosdaCasa.Text = $"Pontos da casa: {form.lblPontosdaCasa}";
-                form.lblWinner.Text = "Casa venceu";
-                form.btnEncerrar.Hide();
-                form.btnStartGame.Hide();
-                form.lblPontosdoJogador.Show();
-                form.lblPontosdaCasa.Show();
-                form.lblWinner.Show();
+                lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
+                lblpontosdacasa.Visible = true;
+                lblpontosdojogador.Text = $"Pontos do jogador: {pontosJogador}";
+                lblpontosdojogador.Visible = true;
+                lblWinner.Text = "A casa venceu";
+                lblWinner.Visible = true;
+                btnEncerrar.Visible = false;
+                btnPedir.Visible = false;
             }
             else if (pontosJogador == 21)
             {
-                form.lblPontosdoJogador.Text = $"Pontos do jogador: {form.lblPontosdoJogador}";
-                form.lblPontosdaCasa.Text = $"Pontos da casa: {form.lblPontosdaCasa}";
-                form.lblWinner.Text = "Casa venceu";
-                form.btnEncerrar.Hide();
-                form.btnStartGame.Hide();
-                form.lblPontosdoJogador.Show();
-                form.lblPontosdaCasa.Show();
-                form.lblWinner.Show();
+                lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
+                lblpontosdacasa.Visible = true;
+                lblpontosdojogador.Text = $"Pontos do jogador: {pontosJogador}";
+                lblpontosdojogador.Visible = true;
+                lblWinner.Text = "Jogador venceu";
+                lblWinner.Visible = true;
+                btnEncerrar.Visible = false;
+                btnPedir.Visible = false;
             }
             else if (pontosCasa == 21)
             {
-                form.lblPontosdoJogador.Text = $"Pontos do jogador: {form.lblPontosdoJogador}";
-                form.lblPontosdaCasa.Text = $"Pontos da casa: {form.lblPontosdaCasa}";
-                form.lblWinner.Text = "Casa venceu";
-                form.btnEncerrar.Hide();
-                form.btnStartGame.Hide();
-                form.lblPontosdoJogador.Show();
-                form.lblPontosdaCasa.Show();
-                form.lblWinner.Show();
+                lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
+                lblpontosdacasa.Visible = true;
+                lblpontosdojogador.Text = $"Pontos do jogador: {pontosJogador}";
+                lblpontosdojogador.Visible = true;
+                lblWinner.Text = "A Casa venceu";
+                lblWinner.Visible = true;
+                btnEncerrar.Visible = false;
+                btnPedir.Visible = false;
             }
             else if (pontosCasa == 21 && pontosJogador == 21)
             {
-                form.lblPontosdoJogador.Text = $"Pontos do jogador: {form.lblPontosdoJogador}";
-                form.lblPontosdaCasa.Text = $"Pontos da casa: {form.lblPontosdaCasa}";
-                form.lblWinner.Text = "Empate";
-               
-                form.btnStartGame.Hide();
-                form.lblPontosdoJogador.Show();
-                form.lblPontosdaCasa.Show();
-                form.lblWinner.Show();
+                lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
+                lblpontosdacasa.Visible = true;
+                lblpontosdojogador.Text = $"Pontos do jogador: {pontosJogador}";
+                lblpontosdojogador.Visible = true;
+                lblWinner.Text = "Empate";
+                lblWinner.Visible = true;
+                btnEncerrar.Visible = false;
+                btnPedir.Visible = false;
             }
-            mesaD.Controls.Clear();
-            for (int x = 0; x < cartasUsadasD.Count; x++)
+            if (pontosCasa == 21 || pontosJogador == 21 || pontosJogador > 21 || pontosCasa > 21)
             {
-                PictureBox cartaD = new PictureBox();
-                cartaD.Width = 200;
-                cartaD.Height = 300;
-                cartaD.SizeMode = PictureBoxSizeMode.Zoom;
-                int y = 0;
-                foreach (Control elemento in mesaD.Controls) { y++; }
-                cartaD.Location = new Point(y * 200, 0);
-                cartaD.ImageLocation = cartasUsadasD[x];
-                mesaD.Controls.Add(cartaD);
+                mesaD.Controls.Clear();
+                for (int x = 0; x < cartasUsadasD.Count; x++)
+                {
+                    PictureBox cartaD = new PictureBox();
+                    cartaD.Width = 200;
+                    cartaD.Height = 300;
+                    cartaD.SizeMode = PictureBoxSizeMode.Zoom;
+                    int y = 0;
+                    foreach (Control elemento in mesaD.Controls) { y++; }
+                    cartaD.Location = new Point(y * 200, 0);
+                    cartaD.ImageLocation = cartasUsadasD[x];
+                    mesaD.Controls.Add(cartaD);
+                }
             }
+            
         }
         private void btnPedirCarta_Click(object sender, EventArgs e)
         {
@@ -303,10 +305,24 @@ namespace blackjackGame
         }
         private void JogadaCasa()
         {
-            while(mesaCasa.Controls.Count != 7 || pontosCasa <= 19)
+            Main form = new Main();
+            do 
             {
                 NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
+                if(pontosCasa > pontosJogador && pontosCasa < 21)
+                {
+                    form.lblPontosdaCasa.Text = $"Pontos da casa: {pontosCasa}";
+                    form.lblPontosdaCasa.Visible = true;
+                    form.lblPontosdoJogador.Text = $"Pontos do jogador:{pontosJogador}";
+                    form.lblPontosdoJogador .Visible = true;
+                    form.btnEncerrar.Visible = false;
+                    form.btnPedirCarta.Visible = false;
+                    form.lblWinner.Text = "A casa venceu";
+                    form.lblWinner.Visible = true;
+                    break;
+                }
             }
+            while(mesaCasa.Controls.Count < 7 && pontosCasa <= 19);
         }
     }
 }
