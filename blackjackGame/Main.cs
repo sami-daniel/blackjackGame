@@ -65,8 +65,22 @@ namespace blackjackGame
 
         public void StartGame()
         {
-            NovaCarta(mesaCasa,Baralho(),rnd.Next(1,13),0, mesaCasa,btnEncerrar,btnPedirCarta,lblWinner,lblPontosdaCasa,lblPontosdoJogador);
-            NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
+            if(pontosCasa < 21)
+            {
+                NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
+                NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
+            }
+            if(pontosCasa == 21)
+            {
+                lblPontosdaCasa.Text = $"Pontos da casa: {pontosCasa}";
+                lblPontosdaCasa.Visible = true;
+                lblPontosdoJogador.Text = $"Pontos do jogador:{pontosJogador}";
+                lblPontosdoJogador.Visible = true;
+                btnEncerrar.Visible = false;
+                btnPedirCarta.Visible = false;
+                lblWinner.Text = "A casa venceu";
+                lblWinner.Visible = true;
+            }
             Thread.Sleep(1000);
             btnPedirCarta.Visible = true;
         }
@@ -298,29 +312,42 @@ namespace blackjackGame
         
         private void btnEncerrar_Click(object sender, EventArgs e)
         {
-            JogadaCasa();
+            JogadaCasa(mesaCasa,lblPontosdaCasa,lblPontosdoJogador,lblWinner,btnPedirCarta,btnEncerrar);
             btnPedirCarta.Hide();
             btnEncerrar.Visible = false;
             btnPedirCarta.Hide();
         }
-        private void JogadaCasa()
+        private void JogadaCasa(Guna2Panel mesaD, Guna2HtmlLabel lblpontosdacasa, Guna2HtmlLabel lblpontosdojogador, Guna2HtmlLabel lblWinner, Guna2Button btnPedir, Guna2Button btnEncerrar)
         {
-            Main form = new Main();
+            
             do 
-            {
-                NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
+            {   
                 if(pontosCasa > pontosJogador && pontosCasa < 21)
                 {
-                    form.lblPontosdaCasa.Text = $"Pontos da casa: {pontosCasa}";
-                    form.lblPontosdaCasa.Visible = true;
-                    form.lblPontosdoJogador.Text = $"Pontos do jogador:{pontosJogador}";
-                    form.lblPontosdoJogador .Visible = true;
-                    form.btnEncerrar.Visible = false;
-                    form.btnPedirCarta.Visible = false;
-                    form.lblWinner.Text = "A casa venceu";
-                    form.lblWinner.Visible = true;
+                    lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
+                    lblpontosdacasa.Visible = true;
+                    lblpontosdojogador.Text = $"Pontos do jogador:{pontosJogador}";
+                    lblpontosdojogador.Visible = true;
+                    btnEncerrar.Visible = false;
+                    btnEncerrar.Visible = false;
+                    lblWinner.Text = "A casa venceu";
+                    lblWinner.Visible = true;
+                    mesaD.Controls.Clear();
+                    for (int x = 0; x < cartasUsadasD.Count; x++)
+                    {
+                        PictureBox cartaD = new PictureBox();
+                        cartaD.Width = 200;
+                        cartaD.Height = 300;
+                        cartaD.SizeMode = PictureBoxSizeMode.Zoom;
+                        int y = 0;
+                        foreach (Control elemento in mesaD.Controls) { y++; }
+                        cartaD.Location = new Point(y * 200, 0);
+                        cartaD.ImageLocation = cartasUsadasD[x];
+                        mesaD.Controls.Add(cartaD);
+                    }
                     break;
                 }
+                NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
             }
             while(mesaCasa.Controls.Count < 7 && pontosCasa <= 19);
         }
