@@ -16,7 +16,7 @@ namespace blackjackGame
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainProgram());
+            Application.Run(new Main());
         }
     }
 }

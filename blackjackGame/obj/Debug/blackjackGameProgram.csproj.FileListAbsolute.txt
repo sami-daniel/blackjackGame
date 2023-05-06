@@ -20,4 +20,4 @@ C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Microsoft.Web.WebVi
 C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Microsoft.Web.WebView2.Core.xml
 C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Microsoft.Web.WebView2.WinForms.xml
 C:\Users\Sami\Projetos\blackjackGame\blackjackGame\bin\Debug\Microsoft.Web.WebView2.Wpf.xml
-C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.MainProgram.resources
+C:\Users\Sami\Projetos\blackjackGame\blackjackGame\obj\Debug\blackjackGame.Main.resources
