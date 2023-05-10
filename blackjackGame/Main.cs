@@ -1,20 +1,8 @@
-﻿using Guna.UI2.WinForms;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Threading;
-using System.Diagnostics.Eventing.Reader;
-using System.Runtime.CompilerServices;
 using System.IO;
+using EnvDTE;
 
 namespace blackjackGame
 {
@@ -23,24 +11,32 @@ namespace blackjackGame
         public Main()
         {
             InitializeComponent();
-            Deck deck = new Deck();
-            deck.CriarDeck();
         }
 
+        private void Main_Load(object sender, EventArgs e)
+        {
+            Game game = new Game();
+            game.Deck();
+        }
     }
     public class Deck
     {
         public List<Carta> CriarDeck()
         {
             List<Carta> deck = new List<Carta>();
-            string pastaImagem = "C:\\Users\\Sami\\Projetos\\blackjackGame\\blackjackGame\\Assets\\Baralho";
+            //Detecta a pasta onde a solução SLN está
+            DTE dte = (DTE)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE");
+            Solution solution = dte.Solution;
+
+            string caminhoSln = solution.FileName;
+            string diretorioSln = Path.GetDirectoryName(caminhoSln) + @"\Assets\Baralho\";
+            //Armazena os objetos na lista do tipo Carta
             foreach (string naipe in Naipes())
             {
                 foreach (string valor in ValorCarta())
                 {
                     string nomeImagem = $"{valor.ToString().ToLower()}_de_{naipe.ToString().ToLower()}.png";
-                    string caminhoImagem = Path.Combine(pastaImagem, nomeImagem);
-
+                    string caminhoImagem = Path.Combine(diretorioSln, nomeImagem);
                     deck.Add(new Carta(naipe, valor, caminhoImagem));
                 }
             }
@@ -66,38 +62,40 @@ namespace blackjackGame
                 deck[n] = value;
             }
         }
+
         private string[] Naipes()
         {
-            string[] Naipe = { "Paus", "Copas", "Espadas", "Ouros" };
-    
+            string[] Naipe = { "paus", "copas", "espadas", "ouros" };
             return Naipe;
         }
         private string[] ValorCarta()
         {
-            string[] ValorCarta = { "Ás", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Valete", "Dama", "Rei" };
+            string[] ValorCarta = { "ás", "2", "3", "4", "5", "6", "7", "8", "9", "10", "valete", "dama", "rei" };
             return ValorCarta;
         }
-        public class Carta : Deck
+        public sealed class Carta
         {
+            //Propriedades da classe
             public string Naipe { get; private set; }
             public int Valor { get; private set; }
             public string CaminhoImagem { get; private set; }
+            //Contrutor da classe Carta 
             public Carta(string naipe, string valor, string caminhoImagem)
             {
                 Naipe = naipe;
-                if (valor == "Ás")
+                if (valor == "ás")
                 {
                     Valor = 1;
                 }
-                else if (valor == "Valete")
+                else if (valor == "valete")
                 {
                     Valor = 10;
                 }
-                else if (valor == "Dama")
+                else if (valor == "dama")
                 {
                     Valor = 10;
                 }
-                else if (valor == "Rei")
+                else if (valor == "rei")
                 {
                     Valor = 10;
                 }
@@ -107,6 +105,13 @@ namespace blackjackGame
                 }
                 CaminhoImagem = caminhoImagem;
             }
+        }
+    }
+    sealed class Game : Deck
+    {   
+        public void Deck()
+        {
+            CriarDeck();
         }
     }
 }
