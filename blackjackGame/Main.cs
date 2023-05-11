@@ -1,355 +1,459 @@
-﻿using Guna.UI2.WinForms;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
-using System.Diagnostics;
+using System.IO;
+using EnvDTE;
+using static blackjackGame.Deck;
+using System.Drawing;
+using Guna.UI2.WinForms;
 using System.Threading;
-using System.Diagnostics.Eventing.Reader;
+using System.Web.UI.WebControls;
 using System.Runtime.CompilerServices;
 
 namespace blackjackGame
 {
     public partial class Main : Form
     {
-        public static List<string> cartasUsadasD = new List<string>();
-        Random rnd = new Random();
-        public static int pontosCasa = 0;
-        public static int pontosJogador = 0;
-        public static bool TemAs = false;
-        public static bool EaPrimeiraCartaDoDealer = true;
-        public static bool vencedorD = false;
-        public static bool vencedorP = false;
-        
+        List<Carta> cartaListJogador = new List<Carta>();
+        List<Carta> cartaListCasa = new List<Carta>();
+        public bool PrimeiraCartaCasa = true;
         public Main()
         {
             InitializeComponent();
-           
+            Deck.DeckCreate();
         }
-      
+
         private void Main_Load(object sender, EventArgs e)
         {
-            this.Width = 2000;
-            this.Height = 900;
-            this.MaximizeBox = false;
-            this.FormBorderStyle = FormBorderStyle.Fixed3D;
-            this.StartPosition = FormStartPosition.CenterScreen;
             this.mesaCasa.Left = (this.ClientSize.Width - this.mesaCasa.Width) / 2;
-            this.mesaCasa.Top = 25;
-            this.mesaCasa.BackColor = Color.Transparent;
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.mesaCasa.Top = 155;
+
+
             this.mesaJogador.Left = (this.ClientSize.Width - this.mesaJogador.Width) / 2;
-            this.mesaJogador.Top = (ClientSize.Height - this.mesaJogador.Height - 25);
-            this.mesaJogador.BackColor = Color.Transparent;
+            this.mesaJogador.Top = (ClientSize.Height - this.mesaJogador.Height - 155);
+
+
+            this.btnEncerrarJogada.Left = 25;
+            this.btnPedirCarta.Left = 25;
+
+            this.btnIniciar.Left = 900;
+            this.btnIniciar.Top = 400;
+
+            this.lblPontosCasa.Left = 25;
+            this.lblPontosJogador.Left = 25;
+
+
+            this.lblWinner.Left = 25;
+
+
+            this.btnReiniciar.Left = 25;
+
+
+            this.lblException.Left = 25;
+
+
+            this.lblPontosCasa.Visible = false;
+            this.lblPontosJogador.Visible = false;
+            this.btnReiniciar.Visible = false;
+            this.lblException.Visible = false;
+            this.lblWinner.Visible = false;
             this.mesaJogador.Visible = false;
             this.mesaCasa.Visible = false;
-            this.btnStartGame.Location = new Point(ClientSize.Width / 2,ClientSize.Height/2) ;
-            this.btnPedirCarta.Hide();
-            this.btnPedirCarta.Location = new Point(ClientSize.Width - 2 * btnPedirCarta.Width);
-            this.btnPedirCarta.Top = ClientSize.Height - 75;
-            this.btnEncerrar.Hide();
-            this.btnEncerrar.Location = new Point(ClientSize.Width - 2 * btnPedirCarta.Width);
-            this.btnEncerrar.Top = ClientSize.Height - 75 - btnEncerrar.Height;
-            this.lblPontosdaCasa.Hide();
-            this.lblPontosdoJogador.Hide();
-            this.lblWinner.Hide();
-        }
-       
+            this.btnEncerrarJogada.Visible = false;
+            this.btnPedirCarta.Visible = false;
+            //Algumas propriedades de formatação dos elementos do formulario  
 
-        public void StartGame()
-        {
-            if(pontosCasa < 21)
-            {
-                NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
-                NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
-            }
-            if(pontosCasa == 21)
-            {
-                lblPontosdaCasa.Text = $"Pontos da casa: {pontosCasa}";
-                lblPontosdaCasa.Visible = true;
-                lblPontosdoJogador.Text = $"Pontos do jogador:{pontosJogador}";
-                lblPontosdoJogador.Visible = true;
-                btnEncerrar.Visible = false;
-                btnPedirCarta.Visible = false;
-                lblWinner.Text = "A casa venceu";
-                lblWinner.Visible = true;
-            }
-            Thread.Sleep(1000);
-            btnPedirCarta.Visible = true;
+
         }
-        public static PictureBox NovaCarta(Guna2Panel mesa, Dictionary<int,string> Baralho1, int NewCardAleatorio, int index, Guna2Panel mesaD, Guna2Button btnEncerrar, Guna2Button btnPedir,Guna2HtmlLabel lblWinner,Guna2HtmlLabel lblPontosdaCasa,Guna2HtmlLabel lblPontosDoJogador)
+        //Metodos para a criaçao das cartas
+        private void CriaCartaJogador()
         {
-            Debug.Assert(!(index != 0) || !(index != 1), "Index invalído");
-            PictureBox novaCarta = new PictureBox();
-            Main form = new Main();
-            int i = 0;
-            novaCarta.Size = new System.Drawing.Size(200,300);
-            foreach (Control elemento in mesa.Controls) {i++;}
-            novaCarta.Location = new System.Drawing.Point(i * 200, 0);
-            novaCarta.SizeMode = PictureBoxSizeMode.Zoom;
-            if (EaPrimeiraCartaDoDealer && index == 0)
-            {
-                novaCarta.ImageLocation = "C:\\Users\\Sami\\Projetos\\blackjackGame\\blackjackGame\\Assets\\Baralho\\partedetrasdacarta.png";
-                cartasUsadasD.Add(Baralho1[NewCardAleatorio]);
-                EaPrimeiraCartaDoDealer = false;
-                if(NewCardAleatorio == 10)
-                {
-                    pontosCasa += 10;
-                }
-                else if (NewCardAleatorio == 11)
-                {
-                    pontosCasa +=10;
-                }
-                else if (NewCardAleatorio == 12)
-                {
-                    pontosCasa += 10;
-                }
-                else
-                {
-                    pontosCasa += NewCardAleatorio;
-                }
-            }
-            else if(index == 0)
-            {
-                novaCarta.ImageLocation = Baralho1[NewCardAleatorio];
-                cartasUsadasD.Add(Baralho1[NewCardAleatorio]);
-               
-                if (NewCardAleatorio == 10)
-                {
-                    pontosCasa += 10;
-                }
-                else if (NewCardAleatorio == 11)
-                {
-                    pontosCasa += 10;
-                }
-                else if (NewCardAleatorio == 12)
-                {
-                    pontosCasa += 10;
-                }
-                else if (NewCardAleatorio == 0)
-                {
-                    pontosCasa += 11;
-                    TemAs = true;
-                }
-                else
-                {
-                    pontosCasa += NewCardAleatorio;
-                }
-                if (index == 0 && TemAs && pontosCasa > 21)
-                {
-                    pontosCasa -= 11;
-                    pontosCasa += 1;
-                    TemAs = false;
-                }
-            }
-            else if(index == 1)
-            {
-                novaCarta.ImageLocation = Baralho1[NewCardAleatorio];
-                if (NewCardAleatorio == 10)
-                {
-                    pontosJogador += 10;
-                }
-                else if (NewCardAleatorio == 11)
-                {
-                    pontosJogador += 10;
-                }
-                else if (NewCardAleatorio == 12)
-                {
-                    pontosJogador += 10;
-                }
-                else if (NewCardAleatorio == 0)
-                {
-                    pontosJogador += 11;
-                    TemAs = true;
-                }
-                else
-                {
-                    pontosJogador += NewCardAleatorio;
-                }
-                if (index == 1 && TemAs && pontosJogador > 21)
-                {
-                    pontosJogador -= 11;
-                    pontosJogador += 1;
-                    TemAs = false;
-                }
-            }
-            
-            mesa.Controls.Add(novaCarta);
-            if(pontosCasa >= 21 || pontosJogador >= 21)
-            {
-                FimDeJogo(mesaD,lblPontosdaCasa,lblPontosDoJogador,lblWinner,btnPedir,btnEncerrar);
-                  
-            }
-            return novaCarta;
+            Carta cartaJogador = Game.PegarCartaJogador(ref deck, lblPontosJogador, lblException);
+            AdicionarCartaJogador(cartaJogador);
+            TesteJogador();
+            cartaListJogador.Add(cartaJogador);
         }
-        
-        public static Dictionary<int, string> Baralho()
+        private void CriaCartaCasa()
         {
-            Dictionary<int,string> baralho = new Dictionary<int,string>();
-            for(int i = 1; i <= 13; i++)
+            Carta cartaCasa = Game.PegarCartaCasa(ref deck, lblPontosCasa, lblException);
+            AdicionarCartaCasa(cartaCasa);
+            TesteCasa();
+            cartaListCasa.Add(cartaCasa);
+        }
+        //Metodo de inicio(Não utilizado os metódos acima por que alguns testes nao podem ser feitos da mesma maneira)
+        private void StartGame()
+        {
+            Carta cartaCasa = Game.PegarCartaCasa(ref deck, lblPontosCasa, lblException);
+            AdicionarCartaCasa(cartaCasa);
+            Carta cartaCasa1 = Game.PegarCartaCasa(ref deck, lblPontosCasa, lblException);
+            AdicionarCartaCasa(cartaCasa1);
+            cartaListCasa.Add(cartaCasa);
+            cartaListCasa.Add(cartaCasa1);
+
+
+            Carta cartaJogador = Game.PegarCartaJogador(ref deck, lblPontosJogador, lblException);
+            AdicionarCartaJogador(cartaJogador);
+            Carta cartajogador1 = Game.PegarCartaJogador(ref deck, lblPontosJogador, lblException);
+            AdicionarCartaJogador(cartajogador1);
+            cartaListJogador.Add(cartaJogador);
+            cartaListJogador.Add(cartajogador1);
+
+
+            if (Game.pontosCasa == 21)
             {
-                if (i == 11)
+                btnEncerrarJogada.Hide();
+                btnPedirCarta.Hide();
+                lblWinner.Show();
+                lblWinner.Text = "Vencedor: Casa";
+                this.btnReiniciar.Visible = true;
+                this.lblPontosCasa.Visible = true;
+                this.lblPontosJogador.Visible = true;
+                MostrarCartasCompletasCasa();
+            }
+
+            else if (Game.pontosPlayer == 21)
+            {
+                btnEncerrarJogada.Hide();
+                btnPedirCarta.Hide();
+                lblWinner.Show();
+                lblWinner.Text = "Vencedor: Jogador";
+                this.btnReiniciar.Visible = true;
+                this.lblPontosCasa.Visible = true;
+                this.lblPontosJogador.Visible = true;
+                MostrarCartasCompletasCasa();
+            }
+
+        }
+        //Testa se o jogador perdeu ou ganhou
+        private void TesteJogador()
+        {
+            if (Game.pontosPlayer > 21)
+            {
+                foreach (Carta carta in cartaListJogador)
                 {
-                    baralho.Add(i, "C:\\Users\\Sami\\Projetos\\blackjackGame\\blackjackGame\\Assets\\Baralho\\q_de_copas.png");
-                }
-                else if (i == 12)
-                {
-                    baralho.Add(i, "C:\\Users\\Sami\\Projetos\\blackjackGame\\blackjackGame\\Assets\\Baralho\\j_de_copas.png");
-                }
-                else if (i == 13)
-                {
-                    baralho.Add(i, "C:\\Users\\Sami\\Projetos\\blackjackGame\\blackjackGame\\Assets\\Baralho\\k_de_copas.png");
-                }
-                else
-                {
-                    baralho.Add(i, $"C:\\Users\\Sami\\Projetos\\blackjackGame\\blackjackGame\\Assets\\Baralho\\{i}_de_copas.png");
+                    if (carta.Valor == 11)
+                    {
+                        Game.pontosPlayer -= 10;
+                        carta.Valor = 1;
+                        break;
+                    }
+                    else
+                    {
+                        btnEncerrarJogada.Hide();
+                        btnPedirCarta.Hide();
+                        lblWinner.Show();
+                        lblWinner.Text = "Vencedor: Casa";
+                        this.btnReiniciar.Visible = true;
+                        this.lblPontosCasa.Visible = true;
+                        this.lblPontosJogador.Visible = true;
+                        MostrarCartasCompletasCasa();
+                    }
                 }
             }
-            return baralho;
+            else if (Game.pontosPlayer == 21)
+            {
+                btnEncerrarJogada.Hide();
+                btnPedirCarta.Hide();
+                lblWinner.Show();
+                lblWinner.Text = "Vencedor: Jogador";
+                this.btnReiniciar.Visible = true;
+                this.lblPontosCasa.Visible = true;
+                this.lblPontosJogador.Visible = true;
+                MostrarCartasCompletasCasa();
+            }
+        }
+        //testa se a casa ganhou ou perdeu
+        private void TesteCasa()
+        {
+            if (Game.pontosCasa < 21 && Game.pontosCasa > Game.pontosPlayer)
+            {
+                btnEncerrarJogada.Hide();
+                btnPedirCarta.Hide();
+                lblWinner.Show();
+                lblWinner.Text = "Vencedor: Casa";
+                this.btnReiniciar.Visible = true;
+                this.lblPontosCasa.Visible = true;
+                this.lblPontosJogador.Visible = true;
+                MostrarCartasCompletasCasa();
+            }
+            if (Game.pontosCasa > 21)
+            {
+                foreach (Carta carta in cartaListCasa)
+                {
+                    if (carta.Valor == 11)
+                    {
+                        Game.pontosCasa -= 10;
+                        carta.Valor = 1;
+                        break;
+                    }
+                    else
+                    {
+                        btnEncerrarJogada.Hide();
+                        btnPedirCarta.Hide();
+                        lblWinner.Show();
+                        lblWinner.Text = "Vencedor: Jogador";
+                        this.btnReiniciar.Visible = true;
+                        this.lblPontosCasa.Visible = true;
+                        this.lblPontosJogador.Visible = true;
+                        MostrarCartasCompletasCasa();
+                    }
+                }
+            }
+            if (Game.pontosCasa == 21)
+            {
+                btnEncerrarJogada.Hide();
+                btnPedirCarta.Hide();
+                lblWinner.Show();
+                lblWinner.Text = "Vencedor: Casa";
+                this.btnReiniciar.Visible = true;
+                this.lblPontosCasa.Visible = true;
+                this.lblPontosJogador.Visible = true;
+                MostrarCartasCompletasCasa();
+            }
         }
 
-        private void btnStartGame_Click(object sender, EventArgs e)
+
+
+        private void BtnIniciar_Click(object sender, EventArgs e)
         {
-            StartGame();
-            btnStartGame.Enabled = false;
-            btnStartGame.Visible = false;
-            btnEncerrar.Visible = true;
+            btnIniciar.Visible = false;
             mesaCasa.Visible = true;
             mesaJogador.Visible = true;
+            btnEncerrarJogada.Visible = true;
             btnPedirCarta.Visible = true;
+            StartGame();
         }
-        public static void FimDeJogo(Guna2Panel mesaD,Guna2HtmlLabel lblpontosdacasa,Guna2HtmlLabel lblpontosdojogador,Guna2HtmlLabel lblWinner, Guna2Button btnPedir, Guna2Button btnEncerrar)
+
+
+        private void BtnPedirCarta_Click(object sender, EventArgs e)
         {
-            if (pontosCasa > 21)
+            CriaCartaJogador();
+        }
+
+
+        private void btnEncerrarJogada_Click(object sender, EventArgs e)
+        {
+            int i = 0;
+            if (Game.pontosCasa > 18 && Game.pontosCasa > Game.pontosPlayer)
             {
-                lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
-                lblpontosdacasa.Visible = true;
-                lblpontosdojogador.Text = $"Pontos do jogador: {pontosJogador}";
-                lblpontosdojogador.Visible = true;
-                lblWinner.Text = "Jogador venceu";
-                lblWinner.Visible = true;
-                btnEncerrar .Visible = false;
-                btnPedir.Visible = false;
-                //paro aki
+                btnEncerrarJogada.Hide();
+                btnPedirCarta.Hide();
+                lblWinner.Show();
+                lblWinner.Text = "Vencedor: Casa";
+                this.btnReiniciar.Visible = true;
             }
-            else if(pontosJogador > 21)
+            while (i != 7 && Game.pontosCasa < 18)
             {
-                lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
-                lblpontosdacasa.Visible = true;
-                lblpontosdojogador.Text = $"Pontos do jogador: {pontosJogador}";
-                lblpontosdojogador.Visible = true;
-                lblWinner.Text = "A casa venceu";
-                lblWinner.Visible = true;
-                btnEncerrar.Visible = false;
-                btnPedir.Visible = false;
-            }
-            else if (pontosJogador == 21)
-            {
-                lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
-                lblpontosdacasa.Visible = true;
-                lblpontosdojogador.Text = $"Pontos do jogador: {pontosJogador}";
-                lblpontosdojogador.Visible = true;
-                lblWinner.Text = "Jogador venceu";
-                lblWinner.Visible = true;
-                btnEncerrar.Visible = false;
-                btnPedir.Visible = false;
-            }
-            else if (pontosCasa == 21)
-            {
-                lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
-                lblpontosdacasa.Visible = true;
-                lblpontosdojogador.Text = $"Pontos do jogador: {pontosJogador}";
-                lblpontosdojogador.Visible = true;
-                lblWinner.Text = "A Casa venceu";
-                lblWinner.Visible = true;
-                btnEncerrar.Visible = false;
-                btnPedir.Visible = false;
-            }
-            else if (pontosCasa == 21 && pontosJogador == 21)
-            {
-                lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
-                lblpontosdacasa.Visible = true;
-                lblpontosdojogador.Text = $"Pontos do jogador: {pontosJogador}";
-                lblpontosdojogador.Visible = true;
-                lblWinner.Text = "Empate";
-                lblWinner.Visible = true;
-                btnEncerrar.Visible = false;
-                btnPedir.Visible = false;
-            }
-            if (pontosCasa == 21 || pontosJogador == 21 || pontosJogador > 21 || pontosCasa > 21)
-            {
-                mesaD.Controls.Clear();
-                for (int x = 0; x < cartasUsadasD.Count; x++)
+                i = mesaCasa.Controls.Count;
+                CriaCartaCasa();
+                if (Game.pontosCasa > 18 && Game.pontosCasa == Game.pontosPlayer)
                 {
-                    PictureBox cartaD = new PictureBox();
-                    cartaD.Width = 200;
-                    cartaD.Height = 300;
-                    cartaD.SizeMode = PictureBoxSizeMode.Zoom;
-                    int y = 0;
-                    foreach (Control elemento in mesaD.Controls) { y++; }
-                    cartaD.Location = new Point(y * 200, 0);
-                    cartaD.ImageLocation = cartasUsadasD[x];
-                    mesaD.Controls.Add(cartaD);
-                }
-            }
-            
-        }
-        private void btnPedirCarta_Click(object sender, EventArgs e)
-        {
-            NovaCarta(mesaJogador,Baralho(),rnd.Next(1,13),1, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
-            if(mesaJogador.Controls.Count == 7)
-            {
-                btnPedirCarta.Visible = false;
-            }
-        }
-        
-        private void btnEncerrar_Click(object sender, EventArgs e)
-        {
-            JogadaCasa(mesaCasa,lblPontosdaCasa,lblPontosdoJogador,lblWinner,btnPedirCarta,btnEncerrar);
-            btnPedirCarta.Hide();
-            btnEncerrar.Visible = false;
-            btnPedirCarta.Hide();
-        }
-        private void JogadaCasa(Guna2Panel mesaD, Guna2HtmlLabel lblpontosdacasa, Guna2HtmlLabel lblpontosdojogador, Guna2HtmlLabel lblWinner, Guna2Button btnPedir, Guna2Button btnEncerrar)
-        {
-            
-            do 
-            {   
-                if(pontosCasa > pontosJogador && pontosCasa < 21)
-                {
-                    lblpontosdacasa.Text = $"Pontos da casa: {pontosCasa}";
-                    lblpontosdacasa.Visible = true;
-                    lblpontosdojogador.Text = $"Pontos do jogador:{pontosJogador}";
-                    lblpontosdojogador.Visible = true;
-                    btnEncerrar.Visible = false;
-                    btnEncerrar.Visible = false;
-                    lblWinner.Text = "A casa venceu";
-                    lblWinner.Visible = true;
-                    mesaD.Controls.Clear();
-                    for (int x = 0; x < cartasUsadasD.Count; x++)
-                    {
-                        PictureBox cartaD = new PictureBox();
-                        cartaD.Width = 200;
-                        cartaD.Height = 300;
-                        cartaD.SizeMode = PictureBoxSizeMode.Zoom;
-                        int y = 0;
-                        foreach (Control elemento in mesaD.Controls) { y++; }
-                        cartaD.Location = new Point(y * 200, 0);
-                        cartaD.ImageLocation = cartasUsadasD[x];
-                        mesaD.Controls.Add(cartaD);
-                    }
+                    lblWinner.Text = "Empate";
+                    btnEncerrarJogada.Hide();
+                    btnPedirCarta.Hide();
+                    lblWinner.Show();
+                    this.btnReiniciar.Visible = true;
+                    this.lblPontosCasa.Visible = true;
+                    this.lblPontosJogador.Visible = true;
+                    MostrarCartasCompletasCasa();
                     break;
                 }
-                NovaCarta(mesaCasa, Baralho(), rnd.Next(1, 13), 0, mesaCasa, btnEncerrar, btnPedirCarta, lblWinner, lblPontosdaCasa, lblPontosdoJogador);
             }
-            while(mesaCasa.Controls.Count < 7 && pontosCasa <= 19);
         }
+        private void btnReiniciar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            // Encerrar o aplicativo e reiniciar a partir da segunda tela
+            System.Diagnostics.Process.Start(Application.ExecutablePath);
+        }
+        private void MostrarCartasCompletasCasa()
+        {
+            mesaCasa.Controls.Clear();
+            foreach (Carta obj in cartaListCasa)
+            {
+                Guna2PictureBox Carta = new Guna2PictureBox();
+                int i = mesaCasa.Controls.Count;
+                Carta.Size = new Size(200, 300);
+                Carta.SizeMode = PictureBoxSizeMode.Zoom;
+                Carta.ImageLocation = obj.CaminhoImagem;
+                Carta.Location = new Point(i * 200, 0);
+                mesaCasa.Controls.Add(Carta);
+            }
+        }
+        //Adiciona a parte grafica da imagem da carta do jogador
+        private void AdicionarCartaJogador(Carta carta)
+        {
+            Guna2PictureBox Carta = new Guna2PictureBox();
+            int i = mesaJogador.Controls.Count;
+            Carta.Width = 200;
+            Carta.Height = 300;
+            Carta.SizeMode = PictureBoxSizeMode.Zoom;
+            Carta.ImageLocation = carta.CaminhoImagem;
+            Carta.Location = new Point(i * 200, 0);
+            mesaJogador.Controls.Add(Carta);
+        }
+
+        //Adiciona a parte grafica da imagem da carta da Casa
+        private void AdicionarCartaCasa(Carta carta)
+        {
+            Guna2PictureBox Carta = new Guna2PictureBox();
+            int i = mesaCasa.Controls.Count;
+            Carta.Width = 200;
+            Carta.Height = 300;
+            Carta.SizeMode = PictureBoxSizeMode.Zoom;
+            if (PrimeiraCartaCasa)
+            {
+                Carta.ImageLocation = "C:\\Users\\Sami\\Projetos\\blackjackGame\\blackjackGame\\Assets\\Baralho\\ParteDeTras.png";
+                PrimeiraCartaCasa = false;
+            }
+            else
+            {
+                Carta.ImageLocation = carta.CaminhoImagem;
+            }
+            Carta.Location = new Point(i * Carta.Width, 0);
+            mesaCasa.Controls.Add(Carta);
+        }
+
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Environment.Exit(0);
+        }
+    }
+
+
+    public class Deck
+    {
+        public static List<Carta> deck = new List<Carta>();
+        public static List<Carta> DeckCreate()
+        {
+            //Detecta a pasta onde a solução SLN está
+            DTE dte = (DTE)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE");
+            Solution solution = dte.Solution;
+
+            string caminhoSln = solution.FileName;
+            string diretorioSln = Path.GetDirectoryName(caminhoSln) + @"\Assets\Baralho\";
+            //Armazena os objetos na lista do tipo Carta
+            foreach (string naipe in Naipes())
+            {
+                foreach (string valor in ValorCarta())
+                {
+                    string nomeImagem = $"{valor.ToString().ToLower()}_de_{naipe.ToString().ToLower()}.png";
+                    string caminhoImagem = Path.Combine(diretorioSln, nomeImagem);
+                    deck.Add(new Carta(naipe, valor, caminhoImagem));
+                }
+            }
+            Embaralhar(ref deck);
+            //Retorna o baralho
+            return deck;
+        }
+
+        private static void Embaralhar<T>(ref List<T> deck)
+        {
+            ///<summary>
+            ///Este metódo embaralha a lista (sempre Deck) passada como referencia.
+            ///Utiliza o algoritimo Fisher-Yates para aleatorizar os elementos da lista.
+            ///Para obter mais informações, consulte https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+            ///</summary>
+
+            Random rnd = new Random();
+            int n = deck.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rnd.Next(n + 1);
+                T value = deck[k];
+                deck[k] = deck[n];
+                deck[n] = value;
+            }
+        }
+
+
+        private static string[] Naipes()
+        {
+            string[] Naipe = { "paus", "copas", "espadas", "ouros" };
+            return Naipe;
+        }
+
+
+        private static string[] ValorCarta()
+        {
+            string[] ValorCarta = { "ás", "2", "3", "4", "5", "6", "7", "8", "9", "10", "valete", "dama", "rei" };
+            return ValorCarta;
+        }
+
+
+        public sealed class Carta
+        {
+            //Propriedades da classe
+            public string Naipe { get; private set; }
+
+
+            public int Valor { get; set; }
+
+
+            public string CaminhoImagem { get; private set; }
+            //Contrutor da classe Carta 
+
+
+            public Carta(string naipe, string valor, string caminhoImagem)
+            {
+                Naipe = naipe;
+                if (valor == "ás")
+                {
+                    Valor = 11;
+                }
+                else if (valor == "valete")
+                {
+                    Valor = 10;
+                }
+                else if (valor == "dama")
+                {
+                    Valor = 10;
+                }
+                else if (valor == "rei")
+                {
+                    Valor = 10;
+                }
+                else
+                {
+                    Valor = Convert.ToInt32(valor);
+                }
+                CaminhoImagem = caminhoImagem;
+            }
+
+        }
+    }
+
+
+    public sealed class Game : Main
+    {
+        public static int pontosPlayer = 0;
+        public static int pontosCasa = 0;
+
+        //Retira a carta do baralho e retorna-a para o metódo que requisitou(Player)
+        public static Carta PegarCartaJogador(ref List<Carta> deck, Guna2HtmlLabel lbl, Guna2HtmlLabel lblEx)
+        {
+            Random rnd = new Random();
+            int indexAleatorio = rnd.Next(deck.Count);
+            Carta carta = deck[indexAleatorio];
+            deck.RemoveAt(indexAleatorio);
+            pontosPlayer += carta.Valor;
+            lbl.Text = $"Pontos do jogador: {pontosPlayer}";
+            return carta;
+        }
+
+        //Retira a carta do baralho e retorna-a para o metódo que requisitou(Casa)
+        public static Carta PegarCartaCasa(ref List<Carta> deck, Guna2HtmlLabel lbl, Guna2HtmlLabel lblEx)
+        {
+            Random rnd = new Random();
+            int indexAleatorio = rnd.Next(deck.Count);
+            Carta carta = deck[indexAleatorio];
+            deck.RemoveAt(indexAleatorio);
+            pontosCasa += carta.Valor;
+            lbl.Text = $"Pontos da casa: {pontosCasa}";
+            return carta;
+        }
+
+
     }
 }

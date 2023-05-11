@@ -19,7 +19,13 @@ namespace blackjackGame
 
         private void Menu_FormClosed(object sender, FormClosedEventArgs e)
         {
-            System.Environment.Exit(0);
+        }
+
+        private void btnIniciar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Main main = new Main();
+            main.Show();
         }
     }
 }
