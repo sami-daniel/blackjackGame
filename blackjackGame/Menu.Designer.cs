@@ -58,6 +58,7 @@
             this.btnIniciar.Size = new System.Drawing.Size(138, 45);
             this.btnIniciar.TabIndex = 2;
             this.btnIniciar.Text = "Iniciar";
+            this.btnIniciar.Click += new System.EventHandler(this.btnIniciar_Click);
             // 
             // Menu
             // 
