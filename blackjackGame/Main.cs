@@ -62,24 +62,26 @@ namespace blackjackGame
             this.btnEncerrarJogada.Visible = false;
             this.btnPedirCarta.Visible = false;
             //Algumas propriedades de formatação dos elementos do formulario  
-           
+
 
         }
-        public void CriaCartaJogador()
+        //Metodos para a criaçao das cartas
+        private void CriaCartaJogador()
         {
             Carta cartaJogador = Game.PegarCartaJogador(ref deck, lblPontosJogador, lblException);
             AdicionarCartaJogador(cartaJogador);
             TesteJogador();
             cartaListJogador.Add(cartaJogador);
         }
-        public void CriaCartaCasa()
+        private void CriaCartaCasa()
         {
             Carta cartaCasa = Game.PegarCartaCasa(ref deck, lblPontosCasa, lblException);
             AdicionarCartaCasa(cartaCasa);
             TesteCasa();
             cartaListCasa.Add(cartaCasa);
         }
-        public void StartGame()
+        //Metodo de inicio(Não utilizado os metódos acima por que alguns testes nao podem ser feitos da mesma maneira)
+        private void StartGame()
         {
             Carta cartaCasa = Game.PegarCartaCasa(ref deck, lblPontosCasa, lblException);
             AdicionarCartaCasa(cartaCasa);
@@ -122,7 +124,8 @@ namespace blackjackGame
             }
 
         }
-        public void TesteJogador()
+        //Testa se o jogador perdeu ou ganhou
+        private void TesteJogador()
         {
             if (Game.pontosPlayer > 21)
             {
@@ -159,7 +162,8 @@ namespace blackjackGame
                 MostrarCartasCompletasCasa();
             }
         }
-        public void TesteCasa()
+        //testa se a casa ganhou ou perdeu
+        private void TesteCasa()
         {
             if (Game.pontosCasa < 21 && Game.pontosCasa > Game.pontosPlayer)
             {
@@ -242,7 +246,7 @@ namespace blackjackGame
             {
                 i = mesaCasa.Controls.Count;
                 CriaCartaCasa();
-                if(Game.pontosCasa > 18 && Game.pontosCasa == Game.pontosPlayer)
+                if (Game.pontosCasa > 18 && Game.pontosCasa == Game.pontosPlayer)
                 {
                     lblWinner.Text = "Empate";
                     btnEncerrarJogada.Hide();
@@ -265,18 +269,19 @@ namespace blackjackGame
         private void MostrarCartasCompletasCasa()
         {
             mesaCasa.Controls.Clear();
-            foreach(Carta obj in cartaListCasa)
+            foreach (Carta obj in cartaListCasa)
             {
                 Guna2PictureBox Carta = new Guna2PictureBox();
                 int i = mesaCasa.Controls.Count;
-                Carta.Size = new Size(200,300);
+                Carta.Size = new Size(200, 300);
                 Carta.SizeMode = PictureBoxSizeMode.Zoom;
                 Carta.ImageLocation = obj.CaminhoImagem;
                 Carta.Location = new Point(i * 200, 0);
                 mesaCasa.Controls.Add(Carta);
             }
         }
-        public void AdicionarCartaJogador(Carta carta)
+        //Adiciona a parte grafica da imagem da carta do jogador
+        private void AdicionarCartaJogador(Carta carta)
         {
             Guna2PictureBox Carta = new Guna2PictureBox();
             int i = mesaJogador.Controls.Count;
@@ -288,8 +293,8 @@ namespace blackjackGame
             mesaJogador.Controls.Add(Carta);
         }
 
-
-        public void AdicionarCartaCasa(Carta carta)
+        //Adiciona a parte grafica da imagem da carta da Casa
+        private void AdicionarCartaCasa(Carta carta)
         {
             Guna2PictureBox Carta = new Guna2PictureBox();
             int i = mesaCasa.Controls.Count;
@@ -425,6 +430,7 @@ namespace blackjackGame
         public static int pontosPlayer = 0;
         public static int pontosCasa = 0;
 
+        //Retira a carta do baralho e retorna-a para o metódo que requisitou(Player)
         public static Carta PegarCartaJogador(ref List<Carta> deck, Guna2HtmlLabel lbl, Guna2HtmlLabel lblEx)
         {
             Random rnd = new Random();
@@ -436,7 +442,7 @@ namespace blackjackGame
             return carta;
         }
 
-
+        //Retira a carta do baralho e retorna-a para o metódo que requisitou(Casa)
         public static Carta PegarCartaCasa(ref List<Carta> deck, Guna2HtmlLabel lbl, Guna2HtmlLabel lblEx)
         {
             Random rnd = new Random();
