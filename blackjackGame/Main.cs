@@ -52,6 +52,14 @@ namespace blackjackGame
             this.lblException.Left = 25;
 
 
+            this.lblCrupie.Left = 250;
+            this.lblCrupie.Top = 850;
+
+            this.lblJogador.Left = 250;
+            this.lblJogador.Top = 80;
+
+            this.lblCrupie.Visible = false;
+            this.lblJogador.Visible = false;
             this.lblPontosCasa.Visible = false;
             this.lblPontosJogador.Visible = false;
             this.btnReiniciar.Visible = false;
@@ -221,6 +229,8 @@ namespace blackjackGame
             mesaJogador.Visible = true;
             btnEncerrarJogada.Visible = true;
             btnPedirCarta.Visible = true;
+            lblCrupie.Visible = true;
+            lblJogador.Visible=true;
             StartGame();
         }
 
@@ -234,7 +244,7 @@ namespace blackjackGame
         private void btnEncerrarJogada_Click(object sender, EventArgs e)
         {
             int i = 0;
-            if (Game.pontosCasa > 18 && Game.pontosCasa > Game.pontosPlayer)
+            if (Game.pontosCasa > 17 && Game.pontosCasa > Game.pontosPlayer)
             {
                 btnEncerrarJogada.Hide();
                 btnPedirCarta.Hide();
@@ -245,7 +255,7 @@ namespace blackjackGame
                 this.lblPontosJogador.Visible = true;
                 MostrarCartasCompletasCasa();
             }
-            if(Game.pontosCasa > 18 && Game.pontosCasa < 21)
+            if(Game.pontosCasa > 17 && Game.pontosCasa < 21)
             {
                 if(Game.pontosCasa > Game.pontosPlayer)
                 {
@@ -270,13 +280,13 @@ namespace blackjackGame
                     MostrarCartasCompletasCasa();
                 } 
             }
-            while (i != 7 && Game.pontosCasa < 18)
+            while (i != 7 && Game.pontosCasa < 17)
             {
                 i = mesaCasa.Controls.Count;
                 CriaCartaCasa();
-                if (Game.pontosCasa > 18 && Game.pontosCasa == Game.pontosPlayer)
+                if (Game.pontosCasa >= 17 && Game.pontosCasa > Game.pontosPlayer)
                 {
-                    lblWinner.Text = "Empate";
+                    lblWinner.Text = "Vencedor: Casa";
                     btnEncerrarJogada.Hide();
                     btnPedirCarta.Hide();
                     lblWinner.Show();
