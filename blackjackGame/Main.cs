@@ -241,6 +241,34 @@ namespace blackjackGame
                 lblWinner.Show();
                 lblWinner.Text = "Vencedor: Casa";
                 this.btnReiniciar.Visible = true;
+                this.lblPontosCasa.Visible = true;
+                this.lblPontosJogador.Visible = true;
+                MostrarCartasCompletasCasa();
+            }
+            if(Game.pontosCasa > 18 && Game.pontosCasa < 21)
+            {
+                if(Game.pontosCasa > Game.pontosPlayer)
+                {
+                    btnEncerrarJogada.Hide();
+                    btnPedirCarta.Hide();
+                    lblWinner.Show();
+                    lblWinner.Text = "Vencedor: Casa";
+                    this.btnReiniciar.Visible = true;
+                    this.lblPontosCasa.Visible = true;
+                    this.lblPontosJogador.Visible = true;
+                    MostrarCartasCompletasCasa();
+                }
+                else if(Game.pontosPlayer < Game.pontosCasa)
+                {
+                    btnEncerrarJogada.Hide();
+                    btnPedirCarta.Hide();
+                    lblWinner.Show();
+                    lblWinner.Text = "Vencedor: Jogador";
+                    this.btnReiniciar.Visible = true;
+                    this.lblPontosCasa.Visible = true;
+                    this.lblPontosJogador.Visible = true;
+                    MostrarCartasCompletasCasa();
+                } 
             }
             while (i != 7 && Game.pontosCasa < 18)
             {
