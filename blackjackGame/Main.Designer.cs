@@ -38,6 +38,8 @@
             this.lblWinner = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblException = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.btnReiniciar = new Guna.UI2.WinForms.Guna2Button();
+            this.lblCrupie = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblJogador = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.SuspendLayout();
             // 
             // mesaCasa
@@ -176,12 +178,34 @@
             this.btnReiniciar.Text = "Reiniciar";
             this.btnReiniciar.Click += new System.EventHandler(this.btnReiniciar_Click);
             // 
+            // lblCrupie
+            // 
+            this.lblCrupie.BackColor = System.Drawing.Color.Transparent;
+            this.lblCrupie.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCrupie.Location = new System.Drawing.Point(122, 12);
+            this.lblCrupie.Name = "lblCrupie";
+            this.lblCrupie.Size = new System.Drawing.Size(69, 22);
+            this.lblCrupie.TabIndex = 10;
+            this.lblCrupie.Text = "Crupie ↑";
+            // 
+            // lblJogador
+            // 
+            this.lblJogador.BackColor = System.Drawing.Color.Transparent;
+            this.lblJogador.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblJogador.Location = new System.Drawing.Point(101, 638);
+            this.lblJogador.Name = "lblJogador";
+            this.lblJogador.Size = new System.Drawing.Size(80, 22);
+            this.lblJogador.TabIndex = 11;
+            this.lblJogador.Text = "Jogador  ↧";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(118)))), ((int)(((byte)(147)))));
             this.ClientSize = new System.Drawing.Size(1980, 957);
+            this.Controls.Add(this.lblJogador);
+            this.Controls.Add(this.lblCrupie);
             this.Controls.Add(this.btnReiniciar);
             this.Controls.Add(this.lblException);
             this.Controls.Add(this.lblPontosJogador);
@@ -216,5 +240,7 @@
         public Guna.UI2.WinForms.Guna2HtmlLabel lblWinner;
         public Guna.UI2.WinForms.Guna2HtmlLabel lblException;
         private Guna.UI2.WinForms.Guna2Button btnReiniciar;
+        public Guna.UI2.WinForms.Guna2HtmlLabel lblCrupie;
+        public Guna.UI2.WinForms.Guna2HtmlLabel lblJogador;
     }
 }
