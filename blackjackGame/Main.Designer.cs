@@ -31,7 +31,6 @@
             this.mesaCasa = new Guna.UI2.WinForms.Guna2Panel();
             this.mesaJogador = new Guna.UI2.WinForms.Guna2Panel();
             this.btnPedirCarta = new Guna.UI2.WinForms.Guna2Button();
-            this.btnEncerrarJogada = new Guna.UI2.WinForms.Guna2Button();
             this.btnIniciar = new Guna.UI2.WinForms.Guna2CircleButton();
             this.lblPontosJogador = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblPontosCasa = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -40,6 +39,7 @@
             this.btnReiniciar = new Guna.UI2.WinForms.Guna2Button();
             this.lblCrupie = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblJogador = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.btnEncerra = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
             // 
             // mesaCasa
@@ -84,24 +84,6 @@
             this.btnPedirCarta.TabIndex = 3;
             this.btnPedirCarta.Text = "Pedir Carta";
             this.btnPedirCarta.Click += new System.EventHandler(this.BtnPedirCarta_Click);
-            // 
-            // btnEncerrarJogada
-            // 
-            this.btnEncerrarJogada.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEncerrarJogada.BorderRadius = 8;
-            this.btnEncerrarJogada.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnEncerrarJogada.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnEncerrarJogada.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnEncerrarJogada.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnEncerrarJogada.FillColor = System.Drawing.Color.Red;
-            this.btnEncerrarJogada.Font = new System.Drawing.Font("Sylfaen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEncerrarJogada.ForeColor = System.Drawing.Color.Black;
-            this.btnEncerrarJogada.Location = new System.Drawing.Point(1552, 587);
-            this.btnEncerrarJogada.Name = "btnEncerrarJogada";
-            this.btnEncerrarJogada.Size = new System.Drawing.Size(138, 45);
-            this.btnEncerrarJogada.TabIndex = 4;
-            this.btnEncerrarJogada.Text = "Encerrar";
-            this.btnEncerrarJogada.Click += new System.EventHandler(this.btnEncerrarJogada_Click);
             // 
             // btnIniciar
             // 
@@ -198,12 +180,31 @@
             this.lblJogador.TabIndex = 11;
             this.lblJogador.Text = "Jogador  ↧";
             // 
+            // btnEncerra
+            // 
+            this.btnEncerra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEncerra.BorderRadius = 8;
+            this.btnEncerra.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnEncerra.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnEncerra.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnEncerra.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnEncerra.FillColor = System.Drawing.Color.Red;
+            this.btnEncerra.Font = new System.Drawing.Font("Sylfaen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEncerra.ForeColor = System.Drawing.Color.Black;
+            this.btnEncerra.Location = new System.Drawing.Point(1552, 587);
+            this.btnEncerra.Name = "btnEncerra";
+            this.btnEncerra.Size = new System.Drawing.Size(138, 45);
+            this.btnEncerra.TabIndex = 12;
+            this.btnEncerra.Text = "Encerrar Jogada";
+            this.btnEncerra.Click += new System.EventHandler(this.btnEncerra_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(118)))), ((int)(((byte)(147)))));
             this.ClientSize = new System.Drawing.Size(1980, 957);
+            this.Controls.Add(this.btnEncerra);
             this.Controls.Add(this.lblJogador);
             this.Controls.Add(this.lblCrupie);
             this.Controls.Add(this.btnReiniciar);
@@ -212,7 +213,6 @@
             this.Controls.Add(this.lblPontosCasa);
             this.Controls.Add(this.lblWinner);
             this.Controls.Add(this.btnIniciar);
-            this.Controls.Add(this.btnEncerrarJogada);
             this.Controls.Add(this.btnPedirCarta);
             this.Controls.Add(this.mesaJogador);
             this.Controls.Add(this.mesaCasa);
@@ -233,7 +233,6 @@
         private Guna.UI2.WinForms.Guna2Panel mesaCasa;
         private Guna.UI2.WinForms.Guna2Panel mesaJogador;
         private Guna.UI2.WinForms.Guna2Button btnPedirCarta;
-        private Guna.UI2.WinForms.Guna2Button btnEncerrarJogada;
         private Guna.UI2.WinForms.Guna2CircleButton btnIniciar;
         public Guna.UI2.WinForms.Guna2HtmlLabel lblPontosJogador;
         public Guna.UI2.WinForms.Guna2HtmlLabel lblPontosCasa;
@@ -242,5 +241,6 @@
         private Guna.UI2.WinForms.Guna2Button btnReiniciar;
         public Guna.UI2.WinForms.Guna2HtmlLabel lblCrupie;
         public Guna.UI2.WinForms.Guna2HtmlLabel lblJogador;
+        private Guna.UI2.WinForms.Guna2Button btnEncerra;
     }
 }

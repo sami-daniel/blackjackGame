@@ -33,7 +33,7 @@ namespace blackjackGame
             this.mesaJogador.Top = (ClientSize.Height - this.mesaJogador.Height - 155);
 
 
-            this.btnEncerrarJogada.Left = 25;
+            this.btnEncerra.Left = 25;
             this.btnPedirCarta.Left = 25;
 
             this.btnIniciar.Left = 900;
@@ -67,7 +67,7 @@ namespace blackjackGame
             this.lblWinner.Visible = false;
             this.mesaJogador.Visible = false;
             this.mesaCasa.Visible = false;
-            this.btnEncerrarJogada.Visible = false;
+            this.btnEncerra.Visible = false;
             this.btnPedirCarta.Visible = false;
             //Algumas propriedades de formatação dos elementos do formulario  
 
@@ -80,13 +80,21 @@ namespace blackjackGame
             AdicionarCartaJogador(cartaJogador);
             TesteJogador();
             cartaListJogador.Add(cartaJogador);
+            if(Game.pontosPlayer == 21)
+            {
+                MensagemFim("Jogador");
+            }
+            else if(Game.pontosPlayer > 21)
+            {
+                MensagemFim("Casa");
+            }
         }
         private void CriaCartaCasa()
         {
             Carta cartaCasa = Game.PegarCartaCasa(ref deck, lblPontosCasa, lblException);
             AdicionarCartaCasa(cartaCasa);
-            TesteCasa();
             cartaListCasa.Add(cartaCasa);
+            TesteCasa();
         }
         //Metodo de inicio(Não utilizado os metódos acima por que alguns testes nao podem ser feitos da mesma maneira)
         private void StartGame()
@@ -106,128 +114,81 @@ namespace blackjackGame
             cartaListJogador.Add(cartaJogador);
             cartaListJogador.Add(cartajogador1);
 
-
-            if (Game.pontosCasa == 21)
+            if (Game.pontosCasa == 21 && Game.pontosPlayer == 21)
             {
-                btnEncerrarJogada.Hide();
-                btnPedirCarta.Hide();
-                lblWinner.Show();
-                lblWinner.Text = "Vencedor: Casa";
-                this.btnReiniciar.Visible = true;
-                this.lblPontosCasa.Visible = true;
-                this.lblPontosJogador.Visible = true;
-                MostrarCartasCompletasCasa();
+                MensagemFim("Empate");
+            }
+            else if (Game.pontosCasa == 21)
+            {
+                MensagemFim("Casa");
             }
 
             else if (Game.pontosPlayer == 21)
             {
-                btnEncerrarJogada.Hide();
-                btnPedirCarta.Hide();
-                lblWinner.Show();
-                lblWinner.Text = "Vencedor: Jogador";
-                this.btnReiniciar.Visible = true;
-                this.lblPontosCasa.Visible = true;
-                this.lblPontosJogador.Visible = true;
-                MostrarCartasCompletasCasa();
+                MensagemFim("Jogador");
             }
 
         }
         //Testa se o jogador perdeu ou ganhou
         private void TesteJogador()
         {
-            if (Game.pontosPlayer > 21)
+            /*if (Game.pontosPlayer > 21)
             {
                 foreach (Carta carta in cartaListJogador)
                 {
                     if (carta.Valor == 11)
                     {
-                        Game.pontosPlayer -= 10;
                         carta.Valor = 1;
                         break;
                     }
                     else
                     {
-                        btnEncerrarJogada.Hide();
-                        btnPedirCarta.Hide();
-                        lblWinner.Show();
-                        lblWinner.Text = "Vencedor: Casa";
-                        this.btnReiniciar.Visible = true;
-                        this.lblPontosCasa.Visible = true;
-                        this.lblPontosJogador.Visible = true;
-                        MostrarCartasCompletasCasa();
+                        MensagemFim("Casa");
                     }
                 }
             }
             else if (Game.pontosPlayer == 21)
             {
-                btnEncerrarJogada.Hide();
-                btnPedirCarta.Hide();
-                lblWinner.Show();
-                lblWinner.Text = "Vencedor: Jogador";
-                this.btnReiniciar.Visible = true;
-                this.lblPontosCasa.Visible = true;
-                this.lblPontosJogador.Visible = true;
-                MostrarCartasCompletasCasa();
+                MensagemFim("Jogador");
             }
+            */
+
+
+            //Metódo desativado. Não consegui encontrar uma lógica para caso seja maior que 21 e tiver um Ás, ele subtrair 11 e adicionar um
         }
-        //testa se a casa ganhou ou perdeu
         private void TesteCasa()
         {
-            if (Game.pontosCasa < 21 && Game.pontosCasa > Game.pontosPlayer)
-            {
-                btnEncerrarJogada.Hide();
-                btnPedirCarta.Hide();
-                lblWinner.Show();
-                lblWinner.Text = "Vencedor: Casa";
-                this.btnReiniciar.Visible = true;
-                this.lblPontosCasa.Visible = true;
-                this.lblPontosJogador.Visible = true;
-                MostrarCartasCompletasCasa();
-            }
-            if (Game.pontosCasa > 21)
-            {
-                foreach (Carta carta in cartaListCasa)
-                {
-                    if (carta.Valor == 11)
-                    {
-                        Game.pontosCasa -= 10;
-                        carta.Valor = 1;
-                        break;
-                    }
-                    else
-                    {
-                        btnEncerrarJogada.Hide();
-                        btnPedirCarta.Hide();
-                        lblWinner.Show();
-                        lblWinner.Text = "Vencedor: Jogador";
-                        this.btnReiniciar.Visible = true;
-                        this.lblPontosCasa.Visible = true;
-                        this.lblPontosJogador.Visible = true;
-                        MostrarCartasCompletasCasa();
-                    }
-                }
-            }
-            if (Game.pontosCasa == 21)
-            {
-                btnEncerrarJogada.Hide();
-                btnPedirCarta.Hide();
-                lblWinner.Show();
-                lblWinner.Text = "Vencedor: Casa";
-                this.btnReiniciar.Visible = true;
-                this.lblPontosCasa.Visible = true;
-                this.lblPontosJogador.Visible = true;
-                MostrarCartasCompletasCasa();
-            }
+            /* if (Game.pontosCasa > 21)
+             {
+                 foreach (Carta carta in cartaListCasa)
+                 {
+                     if (carta.Valor == 11)
+                     {
+                         carta.Valor = 1;
+                         break;
+                     }
+                     else
+                     {
+                         MensagemFim("Jogador");
+                     }
+                 }
+             }
+             else if (Game.pontosCasa == 21)
+             {
+                 MensagemFim("Casa");
+             }
+            */
+
+            //Metódo desativado. Não consegui encontrar uma lógica para caso seja maior que 21 e tiver um Ás, ele subtrair 11 e adicionar um
         }
-
-
+        //testa se a casa ganhou ou perdeu
 
         private void BtnIniciar_Click(object sender, EventArgs e)
         {
             btnIniciar.Visible = false;
             mesaCasa.Visible = true;
             mesaJogador.Visible = true;
-            btnEncerrarJogada.Visible = true;
+            btnEncerra.Visible = true;
             btnPedirCarta.Visible = true;
             lblCrupie.Visible = true;
             lblJogador.Visible=true;
@@ -241,6 +202,7 @@ namespace blackjackGame
         }
 
 
+<<<<<<< Updated upstream
         private void btnEncerrarJogada_Click(object sender, EventArgs e)
         {
             int i = 0;
@@ -298,11 +260,14 @@ namespace blackjackGame
                 }
             }
         }
+=======
+
+>>>>>>> Stashed changes
         private void btnReiniciar_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            // Encerrar o aplicativo e reiniciar a partir da segunda tela
-            System.Diagnostics.Process.Start(Application.ExecutablePath);
+
+            //Metódo desativado. Erros ocorrem ao clicar no botão reiniciar. O complidador não apaga o processo
+            //da memória e na hora de executar o exe na pasta /bin ele crasha.
         }
         private void MostrarCartasCompletasCasa()
         {
@@ -356,9 +321,86 @@ namespace blackjackGame
         {
             System.Environment.Exit(0);
         }
+
+        private void btnEncerra_Click(object sender, EventArgs e)
+        {
+
+            //Verificação para se a casa tiver ganhado ou perdido ao clicar no botao encerrar.
+            if (Game.pontosCasa >= 17 && Game.pontosCasa == Game.pontosPlayer)
+            {
+                MensagemFim("Empate");
+            }
+            else if (Game.pontosCasa >= 17)
+            {
+                if (Game.pontosCasa > Game.pontosPlayer)
+                {
+                    MensagemFim("Casa");
+                }
+                else if (Game.pontosCasa < Game.pontosPlayer)
+                {
+                    MensagemFim("Jogador");
+                }
+            }
+            else if (Game.pontosCasa < 17 && Game.pontosCasa > Game.pontosPlayer)
+            {
+                MensagemFim("Casa");
+            }
+            else if (Game.pontosCasa < 17 && Game.pontosCasa < Game.pontosPlayer)
+            {
+                while (true)
+                {
+                    if (Game.pontosCasa >= 17 && Game.pontosCasa < 21)
+                    {
+                        if (Game.pontosCasa > Game.pontosPlayer)
+                        {
+                            MensagemFim("Casa");
+                            break;
+                        }
+                        else if (Game.pontosCasa < Game.pontosPlayer)
+                        {
+                            MensagemFim("Jogador");
+                            break;
+                        }
+                        else if (Game.pontosCasa == Game.pontosPlayer)
+                        {
+                            MensagemFim("Empate");
+                            break;
+                        }
+                    }
+                    else if (Game.pontosCasa < 17 && Game.pontosCasa > Game.pontosPlayer)
+                    {
+                        MensagemFim("Casa");
+                        break;
+                    }
+                    else if (Game.pontosCasa > 21)
+                    {
+                        MensagemFim("Jogador");
+                        break;
+                    }
+                    else if (Game.pontosCasa == 21)
+                    {
+                        MensagemFim("Casa");
+                        break;
+                    }
+                    else if (Game.pontosCasa < 17 && Game.pontosCasa < Game.pontosPlayer)
+                    {
+                        CriaCartaCasa();
+                    }
+                }
+            }
+        }
+        private void MensagemFim(string vencedor)
+        {
+            btnEncerra.Hide();
+            btnPedirCarta.Hide();
+            lblWinner.Show();
+            lblWinner.Text = $"Vencedor: {vencedor}";
+            this.btnReiniciar.Visible = true;
+            this.lblPontosCasa.Visible = true;
+            this.lblPontosJogador.Visible = true;
+            MostrarCartasCompletasCasa();
+        }
     }
-
-
     public class Deck
     {
         public static List<Carta> deck = new List<Carta>();
@@ -438,7 +480,7 @@ namespace blackjackGame
                 Naipe = naipe;
                 if (valor == "ás")
                 {
-                    Valor = 11;
+                    Valor = 1;
                 }
                 else if (valor == "valete")
                 {
