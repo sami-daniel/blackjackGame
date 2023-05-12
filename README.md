@@ -19,4 +19,4 @@ Imagem do jogo
 Tela de vitória
 ![image](https://github.com/sami-daniel/blackjackGame/assets/130937402/d4226f14-eeb3-42ab-b07b-402beea1b242)
 Tela de menu
-Desenvolvido por: sami-daniel
+<br>Desenvolvido por: sami-daniel
