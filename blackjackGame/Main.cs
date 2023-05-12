@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.IO;
-using EnvDTE;
-using static blackjackGame.Deck;
-using System.Drawing;
+﻿using EnvDTE;
 using Guna.UI2.WinForms;
-using System.Threading;
-using System.Web.UI.WebControls;
-using System.Runtime.CompilerServices;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+using static blackjackGame.Deck;
 
 namespace blackjackGame
 {
@@ -191,7 +188,7 @@ namespace blackjackGame
             btnEncerra.Visible = true;
             btnPedirCarta.Visible = true;
             lblCrupie.Visible = true;
-            lblJogador.Visible=true;
+            lblJogador.Visible = true;
             StartGame();
         }
 
@@ -206,7 +203,7 @@ namespace blackjackGame
         private void btnEncerrarJogada_Click(object sender, EventArgs e)
         {
             int i = 0;
-            if (Game.pontosCasa > 17 && Game.pontosCasa > Game.pontosPlayer)
+            if (Game.pontosCasa >= 17 && Game.pontosCasa > Game.pontosPlayer)
             {
                 btnEncerrarJogada.Hide();
                 btnPedirCarta.Hide();
@@ -217,9 +214,9 @@ namespace blackjackGame
                 this.lblPontosJogador.Visible = true;
                 MostrarCartasCompletasCasa();
             }
-            if(Game.pontosCasa > 17 && Game.pontosCasa < 21)
+            if (Game.pontosCasa >= 17 && Game.pontosCasa < 21)
             {
-                if(Game.pontosCasa > Game.pontosPlayer)
+                if (Game.pontosCasa > Game.pontosPlayer)
                 {
                     btnEncerrarJogada.Hide();
                     btnPedirCarta.Hide();
@@ -230,7 +227,7 @@ namespace blackjackGame
                     this.lblPontosJogador.Visible = true;
                     MostrarCartasCompletasCasa();
                 }
-                else if(Game.pontosPlayer < Game.pontosCasa)
+                else if (Game.pontosPlayer < Game.pontosCasa)
                 {
                     btnEncerrarJogada.Hide();
                     btnPedirCarta.Hide();
@@ -240,7 +237,7 @@ namespace blackjackGame
                     this.lblPontosCasa.Visible = true;
                     this.lblPontosJogador.Visible = true;
                     MostrarCartasCompletasCasa();
-                } 
+                }
             }
             while (i != 7 && Game.pontosCasa < 17)
             {
