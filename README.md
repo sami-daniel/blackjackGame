@@ -10,7 +10,7 @@ Se o valor total das cartas do jogador ultrapassar 21, ele perde automaticamente
 Se o jogador obtiver um total de 21 pontos com suas duas primeiras cartas (um Ás e um 10, Valete, Dama ou Rei), isso é chamado de "blackjack" e ele ganha automaticamente, a menos que o dealer também tenha um blackjack, resultando em um empate(Função também desativada em função do erro).
 
 O jogo de 21 é um jogo de estratégia, que envolve decisões matematicamente corretas em relação a quando pedir cartas, ficar ou dobrar, com base nas cartas que o jogador e o dealer possuem. É um jogo emocionante e divertido, com um pouco de sorte e muita habilidade envolvida.
-
+Botão reiniciar não funcionando. Fechar o jogo e rodar novamente.
 Imagens:
 
 ![image](https://github.com/sami-daniel/blackjackGame/assets/130937402/824701a4-6a83-4790-93af-020358364f13)
