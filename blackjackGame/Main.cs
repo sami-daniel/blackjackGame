@@ -199,13 +199,13 @@ namespace blackjackGame
         }
 
 
-<<<<<<< Updated upstream
+
         private void btnEncerrarJogada_Click(object sender, EventArgs e)
         {
             int i = 0;
             if (Game.pontosCasa >= 17 && Game.pontosCasa > Game.pontosPlayer)
             {
-                btnEncerrarJogada.Hide();
+                btnEncerra.Hide();
                 btnPedirCarta.Hide();
                 lblWinner.Show();
                 lblWinner.Text = "Vencedor: Casa";
@@ -218,7 +218,7 @@ namespace blackjackGame
             {
                 if (Game.pontosCasa > Game.pontosPlayer)
                 {
-                    btnEncerrarJogada.Hide();
+                    btnEncerra.Hide();
                     btnPedirCarta.Hide();
                     lblWinner.Show();
                     lblWinner.Text = "Vencedor: Casa";
@@ -229,7 +229,7 @@ namespace blackjackGame
                 }
                 else if (Game.pontosPlayer < Game.pontosCasa)
                 {
-                    btnEncerrarJogada.Hide();
+                    btnEncerra.Hide();
                     btnPedirCarta.Hide();
                     lblWinner.Show();
                     lblWinner.Text = "Vencedor: Jogador";
@@ -246,7 +246,7 @@ namespace blackjackGame
                 if (Game.pontosCasa >= 17 && Game.pontosCasa > Game.pontosPlayer)
                 {
                     lblWinner.Text = "Vencedor: Casa";
-                    btnEncerrarJogada.Hide();
+                    btnEncerra.Hide();
                     btnPedirCarta.Hide();
                     lblWinner.Show();
                     this.btnReiniciar.Visible = true;
@@ -257,9 +257,7 @@ namespace blackjackGame
                 }
             }
         }
-=======
 
->>>>>>> Stashed changes
         private void btnReiniciar_Click(object sender, EventArgs e)
         {
 
